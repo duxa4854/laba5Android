@@ -1,0 +1,103 @@
+package com.example.simplecomposeapp
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MainScreen()
+        }
+    }
+}
+
+@Composable
+fun MainScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        TitleText()
+        ColorRow()
+        NestedContainer()
+    }
+}
+
+@Composable
+fun TitleText() {
+    Text(
+        text = "Пример Состав-приложения\nRow, Column, Size, ARGB",
+        style = MaterialTheme.typography.h4,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+fun ColorRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        ColorBox(color = Color(0xFFFF0000)) // Opaque Red
+        ColorBox(color = Color(0x8000FF00)) // Semi-transparent Green
+        ColorBox(color = Color(0xFF0000FF)) // Opaque Blue
+    }
+}
+
+@Composable
+fun ColorBox(color: Color) {
+    Box(
+        modifier = Modifier
+            .size(80.dp)
+            .background(color)
+    )
+}
+
+@Composable
+fun NestedContainer() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .background(Color(0x33000000))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text("Левая колонка\nТекст 1", color = Color.White)
+                Text("Левая колонка\nТекст 2", color = Color.White)
+            }
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text("Правая колонка\nТекст 1", color = Color.White)
+                Text("Правая колонка\nТекст 2", color = Color.White)
+            }
+        }
+    }
+}
